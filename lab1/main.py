@@ -3,14 +3,6 @@ import numpy as np
 import json
 import sys
 
-MBIT_FACTOR = 8.0 / (1024 * 1024)
-
-result = {}
-max_payload_size = 10 ** 6
-iterations = 1000
-comm = MPI.COMM_WORLD
-rank = world.Get_rank()
-
 
 def run():
     if len(sys.argv) < 2:
@@ -55,5 +47,10 @@ def recv():
     comm.recv(source=0)
 
 
-if __name__ == "__main__":
-    run()
+MBIT_FACTOR = 8 / (1024 * 1024)
+result = {}
+max_payload_size = 10 ** 6
+iterations = 1000
+comm = MPI.COMM_WORLD
+rank = world.Get_rank()
+run()
