@@ -40,7 +40,7 @@ def test_bandwidth_and_latency(comm_type, send):
         latency = convert_to_milliseconds((t2 - t1) / iterations)
         test_result["latency"].append(latency)
         test_result["payload_size"].append(payload_size)
-        test_result["bandwidth"].append(MBIT_FACTOR * (payload_size * iterations) / t2 - t1)
+        test_result["bandwidth"].append(MBIT_FACTOR * (payload_size * iterations) / (t2 - t1))
 
     result[comm_type] = test_result
 
