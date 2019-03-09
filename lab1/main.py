@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 from mpi4py import MPI
 import numpy as np
 import json
@@ -15,12 +16,17 @@ def run():
 
 def print_to_json():
     with open(sys.argv[1], 'w') as fp:
-        json.dump(sample, fp)
+        json.dump(result, fp)
 
+def get_payload_lengths():
+    x = 50
+    while x < max_payload_size:
+        yield int(x)
+        x *= 1.05
 
 def test_bandwidth_and_latency(comm_type, send):
     test_result = {"latency": [], "bandwidth": [], "payload_size": []}
-    for payload_size in xrange(max_payload_size):
+    for payload_size in get_payload_lengths():
         payload = np.random.bytes(payload_size)
         comm.Barrier()
         t1 = MPI.Wtime()
@@ -50,7 +56,7 @@ def recv():
 MBIT_FACTOR = 8 / (1024 * 1024)
 result = {}
 max_payload_size = 10 ** 6
-iterations = 1000
+iterations = 100
 comm = MPI.COMM_WORLD
-rank = world.Get_rank()
+rank = comm.Get_rank()
 run()
