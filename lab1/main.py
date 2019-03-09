@@ -53,7 +53,7 @@ def recv():
     comm.recv(source=0)
 
 
-MBIT_FACTOR = 8 / (1024 * 1024)
+MBIT_FACTOR = 8.0 / (1024 * 1024)
 result = {}
 max_payload_size = 10 ** 6
 iterations = 100
