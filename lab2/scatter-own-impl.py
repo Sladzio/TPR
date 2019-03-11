@@ -7,7 +7,7 @@ def scatter(data, root=0):
         if (rank == root):
             comm.send(data[i], i)
     if (rank != root):
-        payload = []
+        payload = None
         comm.recv(payload)
         print 'Rank', rank, 'has data:', payload
 
