@@ -7,7 +7,7 @@ import sys
 
 def run():
     if len(sys.argv) < 2:
-        print "Provide output json file name"
+        print ("Provide output json file name")
     test_bandwidth_and_latency("send", lambda x: comm.send(x, dest=1))
     test_bandwidth_and_latency("ssend", lambda x: comm.ssend(x, dest=1))
     if rank == 0:
@@ -18,11 +18,13 @@ def print_to_json():
     with open(sys.argv[1], 'w') as fp:
         json.dump(result, fp)
 
+
 def get_payload_lengths():
     x = 50
     while x < max_payload_size:
         yield int(x)
         x *= 1.05
+
 
 def test_bandwidth_and_latency(comm_type, send):
     test_result = {"latency": [], "bandwidth": [], "payload_size": []}
@@ -30,7 +32,7 @@ def test_bandwidth_and_latency(comm_type, send):
         payload = np.random.bytes(payload_size)
         comm.Barrier()
         t1 = MPI.Wtime()
-        for _ in xrange(iterations):
+        for _ in range(iterations):
             if rank == 0:
                 send(payload)
             elif rank == 1:

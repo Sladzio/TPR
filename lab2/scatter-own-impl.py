@@ -4,9 +4,9 @@ from mpi4py import MPI
 
 def scatter(data, root=0):
     for i in range(size):
-        if (rank == root):
+        if rank == root:
             comm.send(data[i], i)
-    if (rank != root):
+    if rank != root:
         payload = None
         comm.recv(payload)
         print 'Rank', rank, 'has data:', payload
@@ -21,4 +21,5 @@ if rank == 0:
     print 'we will be scattering:', data
 else:
     data = None
-    scatter(data, root=0)
+
+scatter(data, root=0)
